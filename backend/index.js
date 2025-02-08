@@ -36,12 +36,12 @@ app.use(clerkMiddleware());
 initializeSocket(httpServer);
 
 // Routes
-app.use("/api/v1/users", userRoutes);
-app.use("/api/v1/admin", adminRoutes);
-app.use("/api/v1/auth", authRoutes);
-app.use("/api/v1/songs", songRoutes);
-app.use("/api/v1/albums", albumRoutes);
-app.use("/api/v1/stats", statRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/admin", adminRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/songs", songRoutes);
+app.use("/api/albums", albumRoutes);
+app.use("/api/stats", statRoutes);
 
 // Global error handler
 app.use((err, req, res, next) => {
