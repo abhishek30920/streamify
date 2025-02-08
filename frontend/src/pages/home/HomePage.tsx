@@ -4,7 +4,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import SectionGrid from "./components/SectionGrid";
 import { usePlayerStore } from "@/stores/usePlayerStore";
 import { TopBar } from "@/components/TopBar";
-import { useMusicStore } from "@/stores/useMusicStore"
+import { UseMusicStore } from "@/stores/UseMusicStore";
 
 const HomePage = () => {
   const {
@@ -15,7 +15,7 @@ const HomePage = () => {
     madeForYouSongs,
     featuredSongs,
     trendingSongs,
-  } = useMusicStore();
+  } = UseMusicStore();
   const { initializeQueue } = usePlayerStore();
 
   useEffect(() => {

@@ -1,9 +1,9 @@
-import { useMusicStore } from "@/stores/useMusicStore";
+import { UseMusicStore } from "@/stores/UseMusicStore";
 import { Library, ListMusic, PlayCircle, Users2 } from "lucide-react";
 import StatsCard from "./StatsCard";
 
 const DashboardStats = () => {
-  const { stats } = useMusicStore();
+  const { stats } = UseMusicStore();
 
   const statsData = [
     {

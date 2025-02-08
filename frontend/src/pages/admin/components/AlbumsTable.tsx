@@ -7,12 +7,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useMusicStore } from "@/stores/useMusicStore";
+import { UseMusicStore } from "@/stores/UseMusicStore";
 import { Calendar, Music, Trash2 } from "lucide-react";
 import { useEffect } from "react";
 
 const AlbumsTable = () => {
-  const { albums, deleteAlbum, fetchAlbums } = useMusicStore();
+  const { albums, deleteAlbum, fetchAlbums } = UseMusicStore();
 
   useEffect(() => {
     fetchAlbums();

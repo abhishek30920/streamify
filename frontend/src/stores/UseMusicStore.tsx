@@ -2,6 +2,7 @@ import { axiosInstance } from "@/lib/axios";
 import { Album, Song, Stats } from "@/types";
 import toast from "react-hot-toast";
 import { create } from "zustand";
+import { AxiosError } from "axios";
 
 interface MusicStore {
   songs: Song[];
@@ -25,7 +26,7 @@ interface MusicStore {
   deleteAlbum: (id: string) => Promise<void>;
 }
 
-export const useMusicStore = create<MusicStore>((set) => ({
+export const UseMusicStore = create<MusicStore>((set) => ({
   albums: [],
   songs: [],
   isLoading: false,
@@ -50,9 +51,11 @@ export const useMusicStore = create<MusicStore>((set) => ({
         songs: state.songs.filter((song) => song._id !== id),
       }));
       toast.success("Song deleted successfully");
-    } catch (error: any) {
-      console.log("Error in deleteSong", error);
-      toast.error("Error deleting song");
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        console.log("Error in deleteSong", error);
+        toast.error("Error deleting song");
+      }
     } finally {
       set({ isLoading: false });
     }
@@ -71,8 +74,10 @@ export const useMusicStore = create<MusicStore>((set) => ({
         ),
       }));
       toast.success("Album deleted successfully");
-    } catch (error: any) {
-      toast.error("Failed to delete album: " + error.message);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        toast.error("Failed to delete album: " + error.message);
+      }
     } finally {
       set({ isLoading: false });
     }
@@ -83,8 +88,10 @@ export const useMusicStore = create<MusicStore>((set) => ({
     try {
       const response = await axiosInstance.get("/songs");
       set({ songs: response.data.songs });
-    } catch (error: any) {
-      set({ error: error.message });
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        set({ error: error.message });
+      }
     } finally {
       set({ isLoading: false });
     }
@@ -96,8 +103,10 @@ export const useMusicStore = create<MusicStore>((set) => ({
       const response = await axiosInstance.get("/stats");
       console.log(response.data);
       set({ stats: response.data });
-    } catch (error: any) {
-      set({ error: error.message });
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        set({ error: error.message });
+      }
     } finally {
       set({ isLoading: false });
     }
@@ -109,8 +118,10 @@ export const useMusicStore = create<MusicStore>((set) => ({
     try {
       const response = await axiosInstance.get("/albums");
       set({ albums: response.data.albums });
-    } catch (error: any) {
-      set({ error: error.response.data.message });
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        set({ error: error.response?.data.message });
+      }
     } finally {
       set({ isLoading: false });
     }
@@ -121,8 +132,10 @@ export const useMusicStore = create<MusicStore>((set) => ({
     try {
       const response = await axiosInstance.get(`/albums/${id}`);
       set({ currentAlbum: response.data });
-    } catch (error: any) {
-      set({ error: error.response.data.message });
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        set({ error: error.response?.data.message });
+      }
     } finally {
       set({ isLoading: false });
     }
@@ -135,8 +148,10 @@ export const useMusicStore = create<MusicStore>((set) => ({
       console.log("fetal;");
       console.log(response);
       set({ featuredSongs: response.data });
-    } catch (error: any) {
-      set({ error: error.response.data.message });
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        set({ error: error.response?.data.message });
+      }
     } finally {
       set({ isLoading: false });
     }
@@ -149,8 +164,10 @@ export const useMusicStore = create<MusicStore>((set) => ({
       console.log("her-======================================");
       console.log(response);
       set({ madeForYouSongs: response.data });
-    } catch (error: any) {
-      set({ error: error.response.data.message });
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        set({ error: error.response?.data.message });
+      }
     } finally {
       set({ isLoading: false });
     }
@@ -163,8 +180,10 @@ export const useMusicStore = create<MusicStore>((set) => ({
       console.log("her-======================================");
       console.log(response);
       set({ trendingSongs: response.data });
-    } catch (error: any) {
-      set({ error: error.response.data.message });
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        set({ error: error.response?.data.message });
+      }
     } finally {
       set({ isLoading: false });
     }

@@ -6,12 +6,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import SongsTabContent from "./components/SongsTabContent";
 import AlbumsTabContent from "./components/AlbumsTabContent";
 import { useEffect } from "react";
-import { useMusicStore } from "@/stores/useMusicStore";
+import { UseMusicStore } from "@/stores/UseMusicStore";
 
 const AdminPage = () => {
 
 
-  const { fetchAlbums, fetchSongs, fetchStats } = useMusicStore();
+  const { fetchAlbums, fetchSongs, fetchStats } = UseMusicStore();
 
   useEffect(() => {
     fetchAlbums();

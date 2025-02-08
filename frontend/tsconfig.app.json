@@ -29,6 +29,7 @@
     "noUncheckedSideEffectImports": true
   },
   "include": ["src"],
-  "exclude": ["src/stores"]
+  "exclude": ["src/**/*.spec.ts", "src/**/*.test.ts"]
+ 
   
 }

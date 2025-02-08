@@ -7,11 +7,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useMusicStore } from "@/stores/useMusicStore";
+import { UseMusicStore } from "@/stores/UseMusicStore";
 import { Calendar, Trash2 } from "lucide-react";
 
 const SongsTable = () => {
-  const { songs, isLoading, error, deleteSong } = useMusicStore();
+  const { songs, isLoading, error, deleteSong } = UseMusicStore();
   console.log(songs);
   if (isLoading) {
     return (
