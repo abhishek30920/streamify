@@ -7,9 +7,6 @@ import cors from "cors";
 import fs from "fs";
 import { createServer } from "http";
 
-
-
-
 import { connectDB } from "./lib/db.js";
 import userRoutes from "./routes/user.route.js";
 import adminRoutes from "./routes/admin.route.js";
@@ -21,26 +18,24 @@ import { initializeSocket } from './lib/socket.js';
 
 dotenv.config();
 
-
 const app = express();
 const PORT = process.env.PORT;
-
 const httpServer = createServer(app);
 
-
+// Initialize middleware
 app.use(
-	cors({
-		origin: process.env.URL,
-		credentials: true,
-	})
+    cors({
+        origin: process.env.URL,
+        credentials: true,
+    })
 );
 
-app.use(express.json()); // to parse req.body
-app.use(clerkMiddleware()); // this will add auth to req obj => req.auth
+app.use(express.json());
+app.use(clerkMiddleware());
 
 initializeSocket(httpServer);
-// cron jobs
 
+// Routes
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/admin", adminRoutes);
 app.use("/api/v1/auth", authRoutes);
@@ -48,10 +43,32 @@ app.use("/api/v1/songs", songRoutes);
 app.use("/api/v1/albums", albumRoutes);
 app.use("/api/v1/stats", statRoutes);
 
-
-// error handler
-
-httpServer.listen(PORT, () => {
-	console.log("Server is running on port " + PORT);
-	connectDB();
+// Global error handler
+app.use((err, req, res, next) => {
+    console.error('Server Error:', err);
+    res.status(500).json({
+        error: 'Internal Server Error',
+        message: err.message
+    });
 });
+
+// Start server function
+const startServer = async () => {
+    try {
+        // Connect to MongoDB first
+        await connectDB();
+        
+        // Then start the server
+        httpServer.listen(PORT, () => {
+            console.log("Server is running on port " + PORT);
+        });
+    } catch (error) {
+        console.error("Failed to start server:", error);
+        // Retry connection after 5 seconds
+        console.log("Retrying in 5 seconds...");
+        setTimeout(startServer, 5000);
+    }
+};
+
+// Start the server
+startServer();
