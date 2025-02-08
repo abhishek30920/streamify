@@ -1,4 +1,4 @@
-import { useAuthStore } from "@/stores/useAuthStore";
+
 import Header from "./components/Header";
 import DashboardStats from "./components/DashBoardStats";
 import { Album, Music } from "lucide-react";
@@ -9,8 +9,7 @@ import { useEffect } from "react";
 import { useMusicStore } from "@/stores/useMusicStore";
 
 const AdminPage = () => {
-  const { isAdmin, isLoading } = useAuthStore();
-  console.log(useAuthStore);
+
 
   const { fetchAlbums, fetchSongs, fetchStats } = useMusicStore();
 

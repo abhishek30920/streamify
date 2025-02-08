@@ -1,9 +1,9 @@
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
 import { Outlet } from "react-router-dom";
-import LeftSidebar from "./components/LeftSidebar";
+import LeftSidebar from "@/layout/components/LeftSideBar";
 import FriendsActivity from "./components/FriendsActivity";
 import AudioPlayer from "./components/AudioPlayer";
-import { PlaybackControls } from "./components/PlaybackControls";
+import { PlaybackControls } from "@/layout/components/PlayBackControls";
 import { useEffect, useState } from "react";
 
 const MainLayout = () => {
