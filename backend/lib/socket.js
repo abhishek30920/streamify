@@ -9,6 +9,7 @@ export const initializeSocket = (server) => {
 			credentials: true,
 		},
 	});
+	console.log(process.env.MONGO_URI)
 console.log("HER=======================")
 	const userSockets = new Map(); // { userId: socketId}
 	const userActivities = new Map(); // {userId: activity}
