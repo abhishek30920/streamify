@@ -33,7 +33,9 @@ app.use(
 );
 
 app.use(express.json());
-app.use(clerkMiddleware());
+app.use(clerkMiddleware({
+    authorizedParties: [process.env.URL],
+}));
 
 initializeSocket(httpServer);
 
