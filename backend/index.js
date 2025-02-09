@@ -7,14 +7,14 @@ import cors from "cors";
 import fs from "fs";
 import { createServer } from "http";
 
-import { connectDB } from "./lib/db.js";
-import userRoutes from "./routes/user.route.js";
-import adminRoutes from "./routes/admin.route.js";
-import authRoutes from "./routes/auth.route.js";
-import songRoutes from "./routes/songs.route.js"
-import albumRoutes from "./routes/album.route.js";
-import statRoutes from "./routes/stats.route.js"
-import { initializeSocket } from './lib/socket.js';
+import {connectDB} from "./src/lib/db.js"
+import userRoutes from "./src/routes/user.route.js";
+import adminRoutes from "./src/routes/admin.route.js";
+import authRoutes from "./src/routes/auth.route.js";
+import songRoutes from "./src/routes/songs.route.js"
+import albumRoutes from "./src/routes/album.route.js";
+import statRoutes from "./src/routes/stats.route.js"
+import { initializeSocket } from './src/lib/socket.js';
 
 dotenv.config();
 
@@ -25,17 +25,13 @@ const httpServer = createServer(app);
 // Initialize middleware
 app.use(
 	cors({
-			origin: process.env.URL,
-			credentials: true,
-			methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-			allowedHeaders: ['Content-Type', 'Authorization'],
+		origin: "http://localhost:3000",
+		credentials: true,
 	})
 );
 
 app.use(express.json());
-app.use(clerkMiddleware({
-    authorizedParties: [process.env.URL],
-}));
+app.use(clerkMiddleware());
 
 initializeSocket(httpServer);
 
