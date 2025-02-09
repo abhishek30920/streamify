@@ -15,6 +15,12 @@ import songRoutes from "./src/routes/songs.route.js"
 import albumRoutes from "./src/routes/album.route.js";
 import statRoutes from "./src/routes/stats.route.js"
 import { initializeSocket } from './src/lib/socket.js';
+import { fileURLToPath } from "url";
+
+
+// Define __dirname for ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 dotenv.config();
 
@@ -51,7 +57,12 @@ app.use((err, req, res, next) => {
         message: err.message
     });
 });
-
+if (process.env.NODE_ENV === "production") {
+	app.use(express.static(path.join(__dirname, "../frontend/dist")));
+	app.get("*", (req, res) => {
+		res.sendFile(path.resolve(__dirname, "../frontend", "dist", "index.html"));
+	});
+}
 // Start server function
 const startServer = async () => {
     try {
