@@ -3,9 +3,11 @@ import { LayoutDashboardIcon } from "lucide-react";
 
 import { Link } from "react-router-dom";
 import SignInOAuthButton from "./SignInOAuthButton";
+import { useAuthStore } from "@/stores/useAuthStore";
 
 export const TopBar = () => {
-  const isAdmin = false;
+  const isAdmin = useAuthStore()
+  console.log(isAdmin)
   return (
     <div className="flex items-center justify-between p-4 sticky top-0 bg-zinc-900/75 backdrop:blur-md z-10 w-full">
       <img src="image.png" className="w-[35px]"/>
@@ -14,7 +16,7 @@ export const TopBar = () => {
       <div className="flex gap-4 items-center">
         {isAdmin && (
           <Link to={"/admin"}>
-            <LayoutDashboardIcon className="size-4 mr-2" />
+            
             Admin DashBoard
           </Link>
         )}

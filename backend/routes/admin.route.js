@@ -3,7 +3,7 @@ import { createSong ,deleteSong,createAlbum,deleteAlbum,checkadmin} from '../con
 import { protectRoute,reqadmin } from '../middleware/auth.middleware.js';
 const router = Router();
 console.log("here")
-
+router.use(protectRoute,reqadmin);
 router.get("/check",checkadmin)
 router.post("/songs",createSong); 
 router.delete("/songs/:id",deleteSong);
