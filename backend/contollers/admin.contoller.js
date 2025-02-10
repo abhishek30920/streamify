@@ -1,10 +1,11 @@
 import { Song } from "../models/song.model.js";
-import { Album } from './../models/album.model.js';
+import { Album } from '../models/album.model.js';
 import cloudinary from '../lib/cloudinary.js'
 
 
 const uploadToCloudinary = async (file,req,res) => {
   try{
+    console.log(file.tempFilePath)
     const result=await cloudinary.uploader.upload(file.tempFilePath,{
       resource_type:"auto",
     }
@@ -47,11 +48,15 @@ export const createSong = async(req, res) => {
     });
       await song.save();
 // update the album
-      if(albumId){
-        const album = await Album.findById(albumId);
-        album.songs.push(song._id);
-        await Album.save();
-      }
+if (albumId) {
+  const album = await Album.findById(albumId);
+  if (!album) {
+      throw new Error("Album not found");
+  }
+  album.songs.push(song._id);
+  await album.save();  // ✅ Correct: `album.save()` on the instance
+}
+
       res.status(201).json({message: "Song created successfully", song});
   } catch (error) {
     console.error(error);
@@ -77,14 +82,17 @@ export const deleteSong = async (req, res) => {
 
 export const createAlbum = async(req, res) => {
   try {
+    console.log("here coming")
     console.log(req.body)
+    console.log(req.files)
     if(!req.files || !req.files.imageFile){
       return res.status(400).json({message: "Please upload image file"})
     }
     const {title,artist,releaseYear} = req.body;
     const imageFile = req.files.imageFile;
-
+    
     const imageUrl=await uploadToCloudinary(imageFile);
+    console.log(imageFile)
     const album=new Album({
       title,
       artist,
