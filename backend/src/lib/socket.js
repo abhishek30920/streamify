@@ -4,18 +4,15 @@ import { Message } from "../models/message.model.js";
 export const initializeSocket = (server) => {
 	console.log("herer-----------")
 	const io = new Server(server, {
-    cors: {
-      origin: process.env.URL,
-      credentials: true,
-      methods: ["GET", "POST"],
-      allowedHeaders: ["Content-Type", "Authorization"],
-    },
+		cors: {
+			origin: "http://localhost:3000",
+			credentials: true,
+		},
+	});
     // Add security settings
-    pingTimeout: 60000,
-    // Enable WebSocket transport
-    transports: ['websocket', 'polling']
-  });
-	console.log(process.env.MONGO_URI)
+  
+  
+
 console.log("HER=======================")
 	const userSockets = new Map(); // { userId: socketId}
 	const userActivities = new Map(); // {userId: activity}
